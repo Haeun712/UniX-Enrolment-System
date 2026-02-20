@@ -17,6 +17,7 @@ public class FindCourseServlet extends HttpServlet {
             throws ServletException, IOException {
 
         response.sendRedirect("findcourse.jsp");  // Redirect to semesterSelection
+        // will update to forward with enrolledCourses attribute
 
     }
 

@@ -15,7 +15,7 @@
         transition: 0.3s;
         margin-top: 74px;
         background-color: white;
-        box-shadow: -8px 0 20px rgba(0, 0, 0, 0.10); 
+        box-shadow: -8px 0 20px rgba(0, 0, 0, 0.10);
     }
 </style>
 
@@ -45,7 +45,10 @@
         <p style="margin-bottom: 10px;">Prerequisite (must be completed)<br>SENG1050</p>
         <p>Assumed Knowledge<br>COMP1140 and SENG1110, or INFT1004 (or equivalent) </p>
         <div class="button-container">
-            <button type="submit" style="padding: 5px 15px;font-size: 16px;margin-top: 40px;">Enrol</button>
+            <form action="CourseEnrolmentServlet" method="post">
+                <input type="hidden" name="course" value="SENG2050"/>
+                <button type="submit" style="padding: 5px 15px;font-size: 16px;margin-top: 40px;">Enrol</button>
+            </form>
         </div>
     </div>
     <% } %>
