@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-<html>
+<%@ page import="seng2050.Course" %>
 <style>
     .sidebar {
         height: 100%;
@@ -14,39 +13,33 @@
         padding-top: 20px;
         transition: 0.3s;
         margin-top: 74px;
-        background-color: white;
+        background-color: #F1F6FF;
         box-shadow: -8px 0 20px rgba(0, 0, 0, 0.10);
     }
 </style>
 
-<% String targetcourse=(String) request.getAttribute("targetcourse"); if (targetcourse!=null && !targetcourse.isEmpty())
+<% Course targetCourse=(Course) request.getAttribute("targetCourse"); if (targetCourse!=null)
     { %>
     <div class="sidebar" id="Sidebar" style="padding: 20px">
-        <p style="margin-right: 20px;color:#003AA6">
-            <%= targetcourse %>
-        </p>
-
+        <div style="display: flex; justify-content: space-between;align-items: end;">
+            <p style="margin-right: 20px;color:#003AA6; ">
+                <%= targetCourse.getCourseID() %>
+            </p>
+            <button class="icon-container" style="padding: 2px 2px;border-radius: 100px;background-color: #F1F6FF;" onclick="location.href='FindCourseServlet'">
+                    <img src="/images/X.png" height="24px" /></button>
+        
+        </div>
         <p style="font-weight: bold;">
-            Web Engineering
+            <%= targetCourse.getCourseName() %>
         </p>
+        <p style="margin-bottom: 30px;font-size: 14px;"><%= targetCourse.getCredits() %> Credits</p>
+        
 
-
-
-        <p style="margin-bottom: 20px;"><span
-                style="display: inline-block; width: 10px; height: 10px; background-color: #00AF0F; border-radius: 50%;"></span>Open
-        </p>
-
-        <p>Location: Callaghan</p>
-        <p>Units: 10</p>
-        <p>Student Level: Undergraduate</p>
-        <p style="margin-bottom: 10px;">Course Level: 2000-level</p>
-
-
-        <p style="margin-bottom: 10px;">Prerequisite (must be completed)<br>SENG1050</p>
+        <p style="margin-bottom: 20px;">Prerequisite <br><span style="font-size: 14px">(must be completed)</span><br>SENG1050</p>
         <p>Assumed Knowledge<br>COMP1140 and SENG1110, or INFT1004 (or equivalent) </p>
         <div class="button-container">
             <form action="CourseEnrolmentServlet" method="post">
-                <input type="hidden" name="course" value="SENG2050"/>
+                <input type="hidden" name="course" value="<%= targetCourse.getCourseID()%>"/>
                 <button type="submit" style="padding: 5px 15px;font-size: 16px;margin-top: 40px;">Enrol</button>
             </form>
         </div>
@@ -57,9 +50,9 @@
                 function toggleSidebar() {
                     var sidebar = document.getElementById("Sidebar");
                     if (sidebar.style.right === "0px") {
-                        sidebar.style.right = "-250px"; // 닫기
+                        sidebar.style.right = "-250px"; // Close
                     } else {
-                        sidebar.style.right = "0px";    // 열기
+                        sidebar.style.right = "0px";    // Open
                     }
                 }
                 window.onload = function () {
@@ -69,4 +62,3 @@
             </script>
             <% } %>
 
-</html>

@@ -2,52 +2,28 @@ package seng2050;
 
 import java.io.Serializable;
 
-public class Course implements Serializable {
-    private String code;
-    private String name;
-    private Boolean isOpen;
-    private String location;
-    private int unit;
+public class Course implements  Serializable {
+    private String  courseID;
+    private String courseName;
+    private int credits;
+    
+    //Constructors
+    public Course () {}
 
-    public Course() {}
-
-    public String getCode() {
-        return code;
+    public Course (String  courseID, String courseName,int credits) {
+        this.courseID = courseID;
+        this.courseName = courseName;
+        this.credits = credits;
     }
 
-    public void setCode(String code) {
-        this.code = code;
-    }
+    //Getters and Setters
+    public String getCourseID() { return courseID; }
+    public void setCourseID (String courseID) { this.courseID = courseID; }
 
-    public Boolean isOpen() {
-        return isOpen;
-    }
+    public String getCourseName() { return courseName; }
+    public void setCourseName (String courseName) { this.courseName = courseName; }
 
-    public void setIsOpen(Boolean isOpen) {
-        this.isOpen = isOpen;
-    }
+    public int getCredits() { return credits; }
+    public void setCredits (int credits) { this.credits = credits; }
 
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
-    public int getUnit() {
-        return unit;
-    }
-
-    public void setUnit(int unit) {
-        this.unit = unit;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 }

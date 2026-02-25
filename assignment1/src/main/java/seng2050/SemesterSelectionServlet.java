@@ -1,10 +1,7 @@
 package seng2050;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
@@ -17,46 +14,37 @@ public class SemesterSelectionServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        Semester semester1 = new Semester();
-        semester1.setIsOpen(true);
-        semester1.setName("Semester 1 - 2026");
+        SemesterService smsService = new SemesterService();
+        List<Semester> semesters = smsService.getAllSemesters();
 
-        Semester semester2 = new Semester();
-        semester2.setIsOpen(false);
-        semester2.setName("Midyear Session - 2026");
-
-        List<Semester> semesters = new ArrayList<>();
-        semesters.add(semester1);
-        semesters.add(semester2);
-
-        List<Map<String, Object>> results = new ArrayList<>();
-        for (Semester s : semesters) {
-            // Create a new Map to store the properties of this course to pass to the JSP
-            Map<String, Object> map = new HashMap<>();
-            map.put("name", s.getName());
-            map.put("open", s.isOpen());
-            results.add(map);
-        }
-
-        request.setAttribute("semesters", results);
+        request.setAttribute("semesters", semesters);
         request.getRequestDispatcher("semesterSelection.jsp").forward(request, response);
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        String semester = request.getParameter("semester");
+        String semesterIDStr = request.getParameter("semesterID");
+        int semesterID = Integer.parseInt(semesterIDStr);
 
-        // Hardcoded authentication check
-        if ("Semester 1 - 2026".equals(semester)) {
+        SemesterService smsService = new SemesterService();
+        //get selected semster obj by semesterID from DB
+        Semester semester = smsService.getSemesterBySemesterID(semesterID);
+
+        // if semester open
+        if (semester.getOpenForEnrolment()) {
             HttpSession session = request.getSession();
+            
+            //store selected semester in session
             session.setAttribute("semester", semester);
             response.sendRedirect("FindCourseServlet");  // Redirect to FindCourseServlet
         } else {
-            request.setAttribute("Error", true);
+            request.setAttribute("error", true);
             request.setAttribute("errorTitle", "Enrolment Closed");
             request.setAttribute("errorContent", "You can no longer enrol in courses for the selected term. Please contact Student Services for assistance.");
 
+            List<Semester> semesters = smsService.getAllSemesters();
+            request.setAttribute("semesters", semesters);
             request.getRequestDispatcher("semesterSelection.jsp").forward(request, response);
         }
     }

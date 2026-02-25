@@ -1,7 +1,6 @@
-<!DOCTYPE html>
-<html>
+
 <!-- show modal if login failed -->
-<% Boolean Error=(Boolean) request.getAttribute("Error"); %>
+<% Boolean Error=(Boolean) request.getAttribute("error"); %>
     <dialog id="error">
         <div style="display: flex;align-items: center;margin-bottom: 20px;">
             <img src="../images/Alert circle.png" height="20px" />
@@ -25,4 +24,3 @@
         <% } %>
 
 
-</html>

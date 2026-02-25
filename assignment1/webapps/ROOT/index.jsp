@@ -27,12 +27,6 @@
             display: inline-block;
         }
     </style>
-    <% Boolean logoutSucceed=(Boolean) request.getAttribute("logout"); %>
-        <% if ( logoutSucceed !=null && logoutSucceed) {%>
-            <script>
-                alert("Logged out successfully");
-            </script>
-            <% } %>
 </head>
 
 <body>
@@ -47,7 +41,7 @@
 
             <div>
                 <form action="LoginServlet" method="post">
-                    <label for="username">Username</label><br>
+                    <label for="username">Username (e.g. c0000)</label><br>
                     <input type="text" id="username" name="username">
                     <label for="password">Password</label><br>
                     <input type="password" id="password" name="password">
@@ -58,7 +52,7 @@
     </div>
 
 
-    <%@ include file="/modal/error.jsp" %>
+    <%@ include file="/modal/error.jsp" %> 
 
 </body>
 
