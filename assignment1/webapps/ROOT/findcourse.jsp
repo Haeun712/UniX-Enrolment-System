@@ -65,7 +65,7 @@
             <form action="FindCourseServlet" method="post">
                 <label for="coursecode">Course Code</label><br>
                 <input type="text" id="coursecode" name="coursecode" placeholder="Enter Course Code (e.g. SENG2050)"
-                    value="<%=session.getAttribute("input") != null ? session.getAttribute("input") : "" %>" style="width: 50%; max-width: 250px">
+                 style="width: 50%; max-width: 250px">
                 <button type="submit" style="padding: 5px 15px;font-size: 16px;margin-left: 20px;">Search</button>
             </form>
         </div>
@@ -100,7 +100,7 @@
     <div class="container">
         <div style="width: 80%; max-width: 600px;text-align: left;">
             <h2>Current Enrolments</h2>
-            <% List<Course> currentEnrolments = (List<Course>) request.getAttribute("currentEnrolments");
+            <% List<Course> currentEnrolments = (List<Course>) session.getAttribute("currentEnrolments");
                 if(currentEnrolments!=null && !currentEnrolments.isEmpty()) { %>
             <table style="width: 100%; border: 1px solid #c5c5c5;border-collapse: collapse; margin-top: 20px;">
                 <thead style="background-color: #c5c5c5;">

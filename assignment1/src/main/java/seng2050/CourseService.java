@@ -14,7 +14,7 @@ public class CourseService {
     public List<Course> searchCourse(String input) {
         List<Course> allCourses = crsDAO.getAllCourses();
         List<Course> matchCourses = new ArrayList<>();
-        
+
         // input is not empty
         if (input != null && !input.trim().isEmpty()) {
             String trimmedInput = input.trim();
@@ -32,5 +32,27 @@ public class CourseService {
 
     public Course getCourseByCourseID(String courseID) {
         return crsDAO.getCourseByCourseID(courseID);
+    }
+
+    public String getAssumedKnowledgeByCourseID(String courseID) {
+        List<String> assumedKnowCourses = crsDAO.getAssumedKnowledgeByCourseID(courseID);
+        String assumedKnowledge;
+        if (assumedKnowCourses == null ||assumedKnowCourses.isEmpty()) {
+            assumedKnowledge = "No assumed knowledge listed";
+        } else {
+            assumedKnowledge = String.join(", ", assumedKnowCourses);
+        }
+        return assumedKnowledge;
+    }
+
+    public String getPrerequisiteByCourseID(String courseID) {
+        List<String> PrerequisiteCourses = crsDAO.getPrerequisiteByCourseID(courseID);
+        String prerequisite;
+        if (PrerequisiteCourses == null ||PrerequisiteCourses.isEmpty()) {
+            prerequisite = "No prerequisite listed";
+        } else {
+            prerequisite = String.join(", ", PrerequisiteCourses);
+        }
+        return prerequisite;
     }
 }

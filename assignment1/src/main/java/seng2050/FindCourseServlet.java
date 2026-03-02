@@ -20,8 +20,9 @@ public class FindCourseServlet extends HttpServlet {
         //find student's current Enroled courses in selected semester by student No and Semester ID
         StudentService studentService = new StudentService();
         List<Course> currentEnrolments = studentService.getCurrentEnrolment(student.getStdNo(), semester.getSemesterID());
+        //Store current Enroled courses in session
+        session.setAttribute("currentEnrolments", currentEnrolments);
 
-        request.setAttribute("currentEnrolments", currentEnrolments);
         request.getRequestDispatcher("findcourse.jsp").forward(request, response);
 
     }
@@ -30,14 +31,6 @@ public class FindCourseServlet extends HttpServlet {
             throws ServletException, IOException {
 
         HttpSession session = request.getSession();
-        Student student = (Student) session.getAttribute("student");
-        Semester semester = (Semester) session.getAttribute("semester");
-
-        //find student's current Enroled courses in selected semester by student No and Semester ID
-        StudentService studentService = new StudentService();
-        List<Course> currentEnrolments = studentService.getCurrentEnrolment(student.getStdNo(), semester.getSemesterID());
-
-        request.setAttribute("currentEnrolments", currentEnrolments);        
 
         String courseCode = request.getParameter("coursecode");
         CourseService courseService = new CourseService();
@@ -45,8 +38,7 @@ public class FindCourseServlet extends HttpServlet {
         //Search courses matching the input coursecode
         List<Course> results = courseService.searchCourse(courseCode);
 
-        //store input and searchresults in session to maintain search results 
-        session.setAttribute("input", courseCode);
+        //store searchresults in session to maintain search results 
         session.setAttribute("searchresults", results);
 
         request.getRequestDispatcher("findcourse.jsp").forward(request, response);

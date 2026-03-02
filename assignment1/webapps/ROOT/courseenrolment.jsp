@@ -34,9 +34,10 @@
         </p>
         <p style="margin-bottom: 30px;font-size: 14px;"><%= targetCourse.getCredits() %> Credits</p>
         
-
-        <p style="margin-bottom: 20px;">Prerequisite <br><span style="font-size: 14px">(must be completed)</span><br>SENG1050</p>
-        <p>Assumed Knowledge<br>COMP1140 and SENG1110, or INFT1004 (or equivalent) </p>
+        <p style="font-weight: bold; margin-bottom: 5px;">Prerequisite <br><span style="font-size: 14px">(must be completed)</span></p>
+        <p style="font-size: 14px;"><%=request.getAttribute("prerequisite")%></p>
+        <p style="font-weight: bold;margin-top: 30px; margin-bottom: 5px">Assumed Knowledge</p>
+        <p style="font-size: 14px;"><%=request.getAttribute("assumedknowledge")%></p>
         <div class="button-container">
             <form action="CourseEnrolmentServlet" method="post">
                 <input type="hidden" name="course" value="<%= targetCourse.getCourseID()%>"/>

@@ -69,5 +69,53 @@ public class CourseDAOImpl implements CourseDAO {
         }
         return courses;
     }
+
+    @Override
+    public List<String> getAssumedKnowledgeByCourseID(String courseID) {
+        List<String> assumedknowledge = new ArrayList<>();
+        String sql = "SELECT * FROM assumedknowledge WHERE courseID = ?";
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+            PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, courseID);
+            ResultSet rs = stmt.executeQuery(); 
+            
+            while (rs.next()) {
+                assumedknowledge.add(rs.getString("assumedKnowledge"));
+            }
+
+            rs.close();
+            stmt.close();
+            conn.close();
+            
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return assumedknowledge;
+    }
+
+    @Override
+    public List<String> getPrerequisiteByCourseID(String courseID) {
+        List<String> prerequisite = new ArrayList<>();
+        String sql = "SELECT * FROM prerequisiteknowledge WHERE courseID = ?";
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+            PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, courseID);
+            ResultSet rs = stmt.executeQuery(); 
+            
+            while (rs.next()) {
+                prerequisite.add(rs.getString("preReqKnowledge"));
+            }
+
+            rs.close();
+            stmt.close();
+            conn.close();
+            
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return prerequisite;
+    }
 }
 
