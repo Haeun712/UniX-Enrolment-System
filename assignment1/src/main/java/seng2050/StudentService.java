@@ -16,14 +16,14 @@ public class StudentService {
 
     public Student authenticateStudent (String stdNo, String password) {
         // Finds the student based on student Id
-        Student s = studentDAO.getStudentByStdNo(stdNo);
+        Student student = studentDAO.getStudentByStdNo(stdNo);
 
-        if (s!=null)
+        if (student!=null)
         {
-            if (password.equals(s.getPasswordHash())) // Checks if passwords match
-            {
-                return s;
-            }
+            PasswordSecurity pSec = new PasswordSecurity();
+            if (pSec.verifyPassword(password, student))
+                return student;
+
         }
         return null;
      }

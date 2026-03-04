@@ -1,33 +1,64 @@
 package seng2050;
 
+import java.io.File;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+
+import org.apache.tomcat.jdbc.pool.DataSource;
+import org.apache.tomcat.jdbc.pool.PoolProperties;
+import org.w3c.dom.Document;
+
 public class StudentCourseRegistrationDAOImpl implements StudentCourseRegistrationDAO {
 
-    private static final String URL = "jdbc:mysql://localhost:3306/unix";
-    private static final String USER = "root";
-    private static final String PASSWORD = "P@ssword1";
+    private static DataSource datasource;
 
     static {
+
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver"); // Load MySQL Driver
-        } catch (ClassNotFoundException e) {
+            // Reading database configuration parameters    
+            File file = new File("databaseConfig.xml");
+            DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory
+                    .newInstance();
+            DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
+            Document document = documentBuilder.parse(file);
+            String jdbc = document.getElementsByTagName("jdbcDriver").item(0).getTextContent();
+            String databaseURL = document.getElementsByTagName("databaseURL").item(0).getTextContent();
+            String usr = document.getElementsByTagName("username").item(0).getTextContent();
+            String pwd = document.getElementsByTagName("password").item(0).getTextContent();
+     
+            // Setting the connection pool properties
+            PoolProperties p = new PoolProperties();
+            p.setUrl(databaseURL);
+            p.setDriverClassName(jdbc);
+            p.setUsername(usr);
+            p.setPassword(pwd);
+            // You can set additional pool properties
+            p.setMaxActive(100); // Maximum number of connections in the pool
+    
+            // Setting the data source with the pool properties defined above
+            datasource = new DataSource();
+            datasource.setPoolProperties(p);
+
+        } catch (Exception e)
+        {
             e.printStackTrace();
         }
+      
 
     }
-
+    
     @Override
     public List<String> getCurrentEnroledCourseIDs(String stdNo, int semesterID) {
         List<String> courseIDs = new ArrayList<>();
         String sql = "SELECT courseID FROM studentcourseregistration WHERE stdNo = ? AND semesterID = ?";
-        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+        try (Connection conn = datasource.getConnection();
             PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, stdNo);
             stmt.setInt(2, semesterID);
