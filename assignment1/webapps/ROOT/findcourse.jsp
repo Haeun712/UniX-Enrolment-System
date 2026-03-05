@@ -81,7 +81,7 @@
                  for (Course course : courses) { %>
                 <form action="CourseEnrolmentServlet" method="get">
                     <input type="hidden" name="coursecode" value="<%=course.getCourseID() %>" />
-                    <button class="resultbox" type="submit" onclick="toggleSidebar()">
+                    <button class="resultbox" type="submit">
                             <p style="margin-right: 20px;color:#003AA6">
                                 <%= course.getCourseID() %>
                             </p>

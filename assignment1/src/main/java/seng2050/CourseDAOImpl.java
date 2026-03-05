@@ -68,10 +68,6 @@ public class CourseDAOImpl implements CourseDAO {
                 return new Course(rs.getString("courseID"), rs.getString("cName"), rs.getInt("credits"));
             }
 
-            rs.close();
-            stmt.close();
-            conn.close();
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -90,10 +86,6 @@ public class CourseDAOImpl implements CourseDAO {
                 courses.add(new Course(rs.getString("courseID"), rs.getString("cName"), 
                         rs.getInt("credits")));
             }
-
-            rs.close();
-            stmt.close();
-            conn.close();
             
 
         } catch (SQLException e) {
@@ -114,10 +106,6 @@ public class CourseDAOImpl implements CourseDAO {
             while (rs.next()) {
                 assumedknowledge.add(rs.getString("assumedKnowledge"));
             }
-
-            rs.close();
-            stmt.close();
-            conn.close();
             
 
         } catch (SQLException e) {
@@ -138,10 +126,6 @@ public class CourseDAOImpl implements CourseDAO {
             while (rs.next()) {
                 prerequisite.add(rs.getString("preReqKnowledge"));
             }
-
-            rs.close();
-            stmt.close();
-            conn.close();
             
 
         } catch (SQLException e) {
@@ -149,5 +133,43 @@ public class CourseDAOImpl implements CourseDAO {
         }
         return prerequisite;
     }
-}
 
+    @Override
+    public int getMaxCapacityByCourseID(String courseID) {
+        String sql = "SELECT maxCapacity FROM courseofferings WHERE courseID = ?";
+        try (Connection conn = datasource.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, courseID);
+            ResultSet rs = stmt.executeQuery(); 
+            
+            if (rs.next()) {
+                return rs.getInt("maxCapacity");
+            }
+            
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    @Override
+    public boolean isCourseOpen(String courseID, int semesterID) {
+        String sql = "SELECT * FROM courseofferings WHERE courseID = ? AND semesterID = ?";
+        try (Connection conn = datasource.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, courseID);
+            stmt.setInt(2, semesterID);
+            ResultSet rs = stmt.executeQuery(); 
+            
+            if (rs.next()) {
+                return true;
+            }
+            
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+}

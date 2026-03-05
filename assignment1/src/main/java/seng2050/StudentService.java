@@ -50,7 +50,27 @@ public class StudentService {
         List<String> currentCourseIDs = regDAO.getCurrentEnroledCourseIDs(stdNo, semesterID);
         List<String> completedCourseIDs = new ArrayList<>(allCourseIDs);
         completedCourseIDs.removeAll(currentCourseIDs);
-        
+
         return completedCourseIDs;
+    }
+
+    public boolean exceedMaxUntis(Course targetCourse, List<Course> currentEnrolments) {
+
+        //Check if the student exceed the maximum unit limit (40 units) with this enrolment
+        int totalCredits = targetCourse.getCredits();
+        for (Course course : currentEnrolments) {
+            totalCredits += course.getCredits();
+        }
+
+        return totalCredits > 40;
+    }
+
+    public Course enrolCourse(String stdNo, String courseID, int semesterID) {
+        Course course = new Course();
+        String enrolledCourseID = regDAO.enrolCourse(stdNo, courseID, semesterID);
+        if (enrolledCourseID != null) {
+            course = crsDAO.getCourseByCourseID(enrolledCourseID);
+        }
+        return course; // returns the enrolled course (if successful), otherwise null (enrollment failed)
     }
 }

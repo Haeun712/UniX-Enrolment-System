@@ -68,10 +68,6 @@ public class StudentCourseRegistrationDAOImpl implements StudentCourseRegistrati
                 courseIDs.add(rs.getString("courseID"));
             }
 
-            rs.close();
-            stmt.close();
-            conn.close();
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -91,14 +87,48 @@ public class StudentCourseRegistrationDAOImpl implements StudentCourseRegistrati
                 courseIDs.add(rs.getString("courseID"));
             }
 
-            rs.close();
-            stmt.close();
-            conn.close();
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return courseIDs;
     }
 
+    @Override
+    public int getEnroledStudentCount(String courseID, int semesterID) {
+        String sql = "SELECT COUNT(*) AS studentCount FROM studentcourseregistration WHERE courseID = ? AND semesterID = ?";
+        try (Connection conn = datasource.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, courseID);
+            stmt.setInt(2, semesterID);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                return rs.getInt("studentCount");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        }
+        return 0;
+    }
+
+    @Override
+    public String enrolCourse(String stdNo, String courseID, int semesterID) {
+        String sql = "INSERT INTO studentcourseregistration (stdNo, courseID, semesterID) VALUES (?, ?, ?)";
+        try (Connection conn = datasource.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, stdNo);
+            stmt.setString(2, courseID);
+            stmt.setInt(3, semesterID);
+            stmt.executeUpdate();   
+
+            return courseID;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
 }

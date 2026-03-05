@@ -1,3 +1,5 @@
+<%@ page import="seng2050.Course" %>
+<%@ page import="java.util.List" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -33,45 +35,48 @@
     </header>
 
 
+    <%
+        Course enroledcourse = (Course) session.getAttribute("course");
+        List<Course> currentEnrolments = (List<Course>) session.getAttribute("currentEnrolments");
+    %>
     <div class="container">
         <div style="width: 80%; max-width: 600px;text-align: left;">
             <h2>Course Enrolment Successful </h2>
             <hr>
             <p style="margin-bottom: 10px;">You have successfully enrolled in <span style="font-weight: bold;">
-                    <%=session.getAttribute("course")%>
+                    <%=enroledcourse.getCourseID()%> - <%=enroledcourse.getCourseName()%>
                 </span>.</p>
         </div>
     </div>
 
     <div class="container">
         <div style="width: 80%; max-width: 600px;text-align: left;">
+            
             <h2>Current Enrolments</h2>
+
+            <%  if(currentEnrolments!=null && !currentEnrolments.isEmpty()) { %>
             <table style="width: 100%; border: 1px solid #c5c5c5;border-collapse: collapse; margin-top: 20px;">
                 <thead style="background-color: #c5c5c5;">
                     <tr>
-                        <th>Course</th>
-                        <th>Units</th>
-                        <th>Status</th>
+                        <th>CourseID</th>
+                        <th>Course Name</th>
+                        <th>Credits</th>
                     </tr>
                 </thead>
                 <tbody>
+                    <% for (Course course : currentEnrolments) { %>
                     <tr>
-                        <td>MATH2021 - Discrete Mathematics</td>
-                        <td>10</td>
-                        <td>Enrolled</td>
+                        <td><%=course.getCourseID() %></td>
+                        <td><%=course.getCourseName() %></td>
+                        <td><%=course.getCredits() %></td>
                     </tr>
-                    <tr>
-                        <td>COMP2020 - Data Structure</td>
-                        <td>10</td>
-                        <td>Enrolled</td>
-                    </tr>
-                    <tr>
-                        <td>SENG2050 - Web Engineering</td>
-                        <td>10</td>
-                        <td>Enrolled</td>
-                    </tr>
+                    <% } %>
                 </tbody>
             </table>
+             <%} else {%>
+                <p style="margin-top: 40px; font-weight: bold;">You are not enrolled in any courses this semester.</p>
+             <% } %>
+            
             <div class="button-container" style="margin-top: 60px;">
                 <form action="FindCourseServlet" method="GET">
                     <button type="submit" style="padding: 5px 15px;font-size: 16px;">Enrol Another Course</button>

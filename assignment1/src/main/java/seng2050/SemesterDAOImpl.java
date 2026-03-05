@@ -68,9 +68,6 @@ public class SemesterDAOImpl implements SemesterDAO {
                     rs.getInt("year"), rs.getBoolean("openForEnrolment"));
             }
 
-            rs.close();
-            stmt.close();
-            conn.close();
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -90,11 +87,6 @@ public class SemesterDAOImpl implements SemesterDAO {
                 semesters.add(new Semester(rs.getInt("semesterID"), rs.getInt("semester"), 
                         rs.getInt("year"), rs.getBoolean("openForEnrolment")));
             }
-
-            rs.close();
-            stmt.close();
-            conn.close();
-            
 
         } catch (SQLException e) {
             e.printStackTrace();

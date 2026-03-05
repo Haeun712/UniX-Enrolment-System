@@ -6,6 +6,7 @@ import java.util.List;
 public class CourseService {
 
     private CourseDAO crsDAO = new CourseDAOImpl();
+    private StudentCourseRegistrationDAO regDAO = new StudentCourseRegistrationDAOImpl();
 
     /* Business logic to search for courses by course ID (Course Code)
         - Performs a case-insensitive search
@@ -42,5 +43,16 @@ public class CourseService {
     public List<String> getPrerequisiteByCourseID(String courseID) {
         List<String> PrerequisiteCourses = crsDAO.getPrerequisiteByCourseID(courseID);
         return PrerequisiteCourses;
+    }
+
+    public boolean reachMaxCapacity(String courseID, int semesterID) {
+        int max = crsDAO.getMaxCapacityByCourseID(courseID);
+        int studentCount = regDAO.getEnroledStudentCount(courseID, semesterID);
+        return studentCount < max;
+    }
+
+    public boolean courseOpen(String courseID, int semesterID) {
+        boolean isCourseOpen = crsDAO.isCourseOpen(courseID, semesterID);
+        return isCourseOpen;
     }
 }
