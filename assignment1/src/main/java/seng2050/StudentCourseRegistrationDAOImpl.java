@@ -78,4 +78,27 @@ public class StudentCourseRegistrationDAOImpl implements StudentCourseRegistrati
         return courseIDs;
     }
 
+    @Override
+    public List<String> getAllEnroledCourseIDs (String stdNo) {
+        List<String> courseIDs = new ArrayList<>();
+        String sql = "SELECT courseID FROM studentcourseregistration WHERE stdNo = ?";
+        try (Connection conn = datasource.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, stdNo);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                courseIDs.add(rs.getString("courseID"));
+            }
+
+            rs.close();
+            stmt.close();
+            conn.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return courseIDs;
+    }
+
 }

@@ -40,12 +40,14 @@
         <p style="font-size: 14px;"><%=request.getAttribute("assumedknowledge")%></p>
         <div class="button-container">
             <form action="CourseEnrolmentServlet" method="post">
-                <input type="hidden" name="course" value="<%= targetCourse.getCourseID()%>"/>
+                <input type="hidden" name="action" value="confirm" />
+                <input type="hidden" name="courseID" value="<%= targetCourse.getCourseID()%>"/>
                 <button type="submit" style="padding: 5px 15px;font-size: 16px;margin-top: 40px;">Enrol</button>
             </form>
         </div>
     </div>
     <% } %>
+    
         <% Boolean openSidebar=(Boolean) request.getAttribute("openSidebar"); if(openSidebar !=null && openSidebar) { %>
             <script>
                 function toggleSidebar() {

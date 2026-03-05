@@ -127,7 +127,9 @@
     </div>
     <%@ include file="courseenrolment.jsp" %>
 
-        <%@ include file="/modal/error.jsp" %>
+    <%@ include file="/modal/error.jsp" %>
+    <%@ include file="/modal/warning.jsp" %>
+    <%@ include file="/modal/confirm.jsp" %>
 </body>
 
 </html>

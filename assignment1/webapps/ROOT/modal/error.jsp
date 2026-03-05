@@ -1,6 +1,6 @@
 
-<!-- show modal if login failed -->
-<% Boolean Error=(Boolean) request.getAttribute("error"); %>
+<!-- show modal if error exist -->
+<% Boolean error=(Boolean) request.getAttribute("error"); %>
     <dialog id="error">
         <div style="display: flex;align-items: center;margin-bottom: 20px;">
             <img src="../images/Alert circle.png" height="20px" />
@@ -16,7 +16,7 @@
         </div>
     </dialog>
 
-    <% if (Error !=null && Error) {%>
+    <% if (error !=null && error) {%>
         <script>
             const dialog = document.getElementById("error");
             dialog.showModal();

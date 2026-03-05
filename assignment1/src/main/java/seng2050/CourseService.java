@@ -34,25 +34,13 @@ public class CourseService {
         return crsDAO.getCourseByCourseID(courseID);
     }
 
-    public String getAssumedKnowledgeByCourseID(String courseID) {
+    public List<String> getAssumedKnowledgeByCourseID(String courseID) {
         List<String> assumedKnowCourses = crsDAO.getAssumedKnowledgeByCourseID(courseID);
-        String assumedKnowledge;
-        if (assumedKnowCourses == null ||assumedKnowCourses.isEmpty()) {
-            assumedKnowledge = "No assumed knowledge listed";
-        } else {
-            assumedKnowledge = String.join(", ", assumedKnowCourses);
-        }
-        return assumedKnowledge;
+        return assumedKnowCourses;
     }
 
-    public String getPrerequisiteByCourseID(String courseID) {
+    public List<String> getPrerequisiteByCourseID(String courseID) {
         List<String> PrerequisiteCourses = crsDAO.getPrerequisiteByCourseID(courseID);
-        String prerequisite;
-        if (PrerequisiteCourses == null ||PrerequisiteCourses.isEmpty()) {
-            prerequisite = "No prerequisite listed";
-        } else {
-            prerequisite = String.join(", ", PrerequisiteCourses);
-        }
-        return prerequisite;
+        return PrerequisiteCourses;
     }
 }

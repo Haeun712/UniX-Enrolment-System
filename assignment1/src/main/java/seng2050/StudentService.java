@@ -12,37 +12,45 @@ public class StudentService {
     /* Business logic to authenticate a student
      - Returns null if the student is not authenticated
      - Otherwise return the student Obj
-    */
-
-    public Student authenticateStudent (String stdNo, String password) {
+     */
+    public Student authenticateStudent(String stdNo, String password) {
         // Finds the student based on student Id
         Student student = studentDAO.getStudentByStdNo(stdNo);
 
-        if (student!=null)
-        {
+        if (student != null) {
             PasswordSecurity pSec = new PasswordSecurity();
-            if (pSec.verifyPassword(password, student))
+            if (pSec.verifyPassword(password, student)) {
                 return student;
+            }
 
         }
         return null;
-     }
-    
-     /* Business logic to get student's current Enrolment (selected semester)
+    }
+
+    /* Business logic to get student's current Enrolment (selected semester)
      - Returns list of courses that the student enrol this semeseter
      - Otherwise, null if student is not enrolled in any courses this semester
-    */
-
+     */
     public List<Course> getCurrentEnrolment(String stdNo, int semesterID) {
         List<String> courseIDs = regDAO.getCurrentEnroledCourseIDs(stdNo, semesterID);
         //get list of Course obj based on list of courseIDs that student enroled
         List<Course> courses = new ArrayList<>();
         for (String courseID : courseIDs) {
             Course course = crsDAO.getCourseByCourseID(courseID);
-            if(course != null) {
+            if (course != null) {
                 courses.add(course);
             }
         }
         return courses;
+    }
+
+    //get Courses that the student completed (regardless semester)
+    public List<String> getCompletedCourseIDs(String stdNo, int semesterID) {
+        List<String> allCourseIDs = regDAO.getAllEnroledCourseIDs(stdNo);
+        List<String> currentCourseIDs = regDAO.getCurrentEnroledCourseIDs(stdNo, semesterID);
+        List<String> completedCourseIDs = new ArrayList<>(allCourseIDs);
+        completedCourseIDs.removeAll(currentCourseIDs);
+        
+        return completedCourseIDs;
     }
 }
