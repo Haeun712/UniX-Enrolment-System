@@ -1,6 +1,7 @@
 package seng2050;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 public class Course implements  Serializable {
     private String  courseID;
@@ -25,5 +26,20 @@ public class Course implements  Serializable {
 
     public int getCredits() { return credits; }
     public void setCredits (int credits) { this.credits = credits; }
+
+     @Override
+    public boolean equals(Object obj) {
+        // Check if the object is compared with itself
+        if (this == obj) return true;
+
+        // Check if the object is an instance of Course
+        if (!(obj instanceof Course)) return false;
+
+        // Typecast obj to Course so that we can compare data members
+        Course other = (Course) obj;
+
+        // Compare the courseID for equality
+        return Objects.equals(this.courseID, other.courseID);
+    }
 
 }

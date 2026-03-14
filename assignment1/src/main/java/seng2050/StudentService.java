@@ -71,6 +71,7 @@ public class StudentService {
         if (enrolledCourseID != null) {
             course = crsDAO.getCourseByCourseID(enrolledCourseID);
         }
+
         return course; // returns the enrolled course (if successful), otherwise null (enrollment failed)
     }
 }

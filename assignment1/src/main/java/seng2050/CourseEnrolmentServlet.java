@@ -56,6 +56,7 @@ public class CourseEnrolmentServlet extends HttpServlet {
         HttpSession session = request.getSession();
         Student student = (Student) session.getAttribute("student");
         Semester semester = (Semester) session.getAttribute("semester");
+        @SuppressWarnings("unchecked")
         List<Course> currentEnrolments = (List<Course>) session.getAttribute("currentEnrolments");
         Course targetCourse = (Course) session.getAttribute("targetCourse");
         
