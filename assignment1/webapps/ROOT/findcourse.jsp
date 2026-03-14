@@ -65,7 +65,7 @@
             <form action="FindCourseServlet" method="post">
                 <label for="coursecode">Course Code</label><br>
                 <input type="text" id="coursecode" name="coursecode" placeholder="Enter Course Code (e.g. SENG2050)"
-                 style="width: 50%; max-width: 250px; height: 30px; margin-top: 8px">
+                 style="width: 50%; max-width: 250px; height: 30px; margin-top: 8px" maxlength="10">
                 <button type="submit" style="padding: 6px 20px;font-size: 16px;margin-left: 20px;">Search</button>
             </form>
         </div>

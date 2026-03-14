@@ -41,6 +41,6 @@ public class FindCourseServlet extends HttpServlet {
         //store searchresults in session to maintain search results 
         session.setAttribute("searchresults", results);
 
-        request.getRequestDispatcher("findcourse.jsp").forward(request, response);
+        response.sendRedirect("FindCourseServlet");  // Redirect to FindCourseServlet to display search results
     }
 }

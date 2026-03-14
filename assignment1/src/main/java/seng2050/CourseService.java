@@ -31,26 +31,42 @@ public class CourseService {
         return matchCourses;
     }
 
+    // Get course details by course ID
+     public Course getCourseDetails(String courseID) {
+        return crsDAO.getCourseByCourseID(courseID);
+     }
+
+     // Get all courses
+     public List<Course> getAllCourses() {
+        return crsDAO.getAllCourses();
+     }
+
+    // Get Course object by course ID
     public Course getCourseByCourseID(String courseID) {
         return crsDAO.getCourseByCourseID(courseID);
     }
 
+    // Get assumed knowledge courses by course ID
     public List<String> getAssumedKnowledgeByCourseID(String courseID) {
         List<String> assumedKnowCourses = crsDAO.getAssumedKnowledgeByCourseID(courseID);
         return assumedKnowCourses;
     }
 
+    // Get prerequisite courses by course ID
     public List<String> getPrerequisiteByCourseID(String courseID) {
         List<String> PrerequisiteCourses = crsDAO.getPrerequisiteByCourseID(courseID);
         return PrerequisiteCourses;
     }
 
-    public boolean reachMaxCapacity(String courseID, int semesterID) {
+    // if the course reach the maximum capacity for this semester, return true. Otherwise, false
+     public boolean reachMaxCapacity(String courseID, int semesterID) {
         int max = crsDAO.getMaxCapacityByCourseID(courseID);
         int studentCount = regDAO.getEnroledStudentCount(courseID, semesterID);
-        return studentCount < max;
+        return studentCount >= max;
     }
 
+    // Check if the course is open for enrolment in this semester, 
+    // return true if the course is offered in this semester. Otherwise, false
     public boolean courseOpen(String courseID, int semesterID) {
         boolean isCourseOpen = crsDAO.isCourseOpen(courseID, semesterID);
         return isCourseOpen;
