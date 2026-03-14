@@ -18,7 +18,7 @@
         form input,
         form button {
             width: 100%;
-            height: 28px;
+            height: 30px;
             margin-bottom: 24px;
         }
 

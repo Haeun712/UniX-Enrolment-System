@@ -61,12 +61,12 @@
             <h2>Find Course</h2>
             <hr>
             <% Semester semester=(Semester) session.getAttribute("semester"); %>
-            <p style="margin-bottom: 10px;">Search for courses offered in Semester <%=semester.getSemester() %> - <%=semester.getYear()%> by Course Code</p>
+            <p style="margin-bottom: 30px;">Search for courses offered in Semester <%=semester.getSemester() %> - <%=semester.getYear()%> by Course Code</p>
             <form action="FindCourseServlet" method="post">
                 <label for="coursecode">Course Code</label><br>
                 <input type="text" id="coursecode" name="coursecode" placeholder="Enter Course Code (e.g. SENG2050)"
-                 style="width: 50%; max-width: 250px">
-                <button type="submit" style="padding: 5px 15px;font-size: 16px;margin-left: 20px;">Search</button>
+                 style="width: 50%; max-width: 250px; height: 30px; margin-top: 8px">
+                <button type="submit" style="padding: 6px 20px;font-size: 16px;margin-left: 20px;">Search</button>
             </form>
         </div>
     </div>

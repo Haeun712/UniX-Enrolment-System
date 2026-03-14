@@ -49,7 +49,7 @@
                                                 <% } %>
                             </div>
                             <div class="button-container">
-                                <button type="submit" style="padding: 5px 15px;font-size: 16px;">Continue</button>
+                                <button type="submit" style="padding: 8px 15px;font-size: 16px;">Continue</button>
                             </div>
                         </form>
                     </div>

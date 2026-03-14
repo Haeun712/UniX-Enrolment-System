@@ -12,7 +12,7 @@
             <%= request.getAttribute("errorContent")%>
         </p>
         <div class="button-container">
-            <button commandfor="error" command="close">Close</button>
+            <button commandfor="error" command="close" style="width: 60px;">OK</button>
         </div>
     </dialog>
 

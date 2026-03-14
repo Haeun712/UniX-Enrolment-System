@@ -75,7 +75,7 @@
                             <input type="hidden" name="action" value="confirm" />
                             <input type="hidden" name="courseID" value="<%= targetCourse.getCourseID()%>" />
                             <button type="submit"
-                                style="padding: 5px 15px;font-size: 16px;margin-top: 40px;">Enrol</button>
+                                style="padding: 6px 20px;font-size: 16px;margin-top: 40px;">Enrol</button>
                         </form>
                     </div>
                 </div>
