@@ -66,10 +66,11 @@
                                 <p style="margin-bottom: 30px;">Search for courses offered in Semester
                                     <%=semester.getSemester() %> - <%=semester.getYear()%> by Course Code</p>
                                 <form action="FindCourseServlet" method="post">
-                                    <input type="hidden" name="action" value="search" />
                                     <label for="search">Course Code</label><br>
-                                    <input type="text" id="search" name="search"
+                                    <% String searchString = (String) request.getAttribute("search") != null ? (String) request.getAttribute("search") : ""; %>
+                                        <input type="text" id="search" name="search"
                                         placeholder="Enter Course Code (e.g. SENG2050)"
+                                        value="<%= searchString %>"
                                         style="width: 50%; max-width: 250px; height: 30px; margin-top: 8px"
                                         maxlength="10">
                                     <button type="submit"

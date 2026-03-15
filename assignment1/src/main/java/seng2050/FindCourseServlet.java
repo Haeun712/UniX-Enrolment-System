@@ -42,7 +42,8 @@ public class FindCourseServlet extends HttpServlet {
         session.setAttribute("searchresults", results);
         // Set a flag to indicate that search results should be displayed
         session.setAttribute("showSearchResult", true);
-        response.sendRedirect("FindCourseServlet");  // Redirect to FindCourseServlet to display search results
+        request.setAttribute("search", searchString);
+        request.getRequestDispatcher("findcourse.jsp").forward(request, response); 
 
     }
 }
