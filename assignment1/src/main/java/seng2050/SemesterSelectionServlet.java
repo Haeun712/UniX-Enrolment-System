@@ -37,6 +37,10 @@ public class SemesterSelectionServlet extends HttpServlet {
             
             //store selected semester in session
             session.setAttribute("semester", semester);
+            if ((Boolean) session.getAttribute("showSearchResult")  != null)
+            {
+                session.removeAttribute("showSearchResult");
+            }
             response.sendRedirect("FindCourseServlet");  // Redirect to FindCourseServlet
         } else {
             request.setAttribute("error", true);

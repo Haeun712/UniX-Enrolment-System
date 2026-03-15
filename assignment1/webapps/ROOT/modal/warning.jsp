@@ -14,11 +14,13 @@
         <div class="button-container">
             <form action="CourseEnrolmentServlet" method="post">
                 <input type="hidden" name="action" value="enrol" />
-                <% String selectedCourseID =(String) request.getAttribute("course"); %>
-                <input type="hidden" name="courseID" value="<%= selectedCourseID  %>" />
+                <% String warningCourseID =(String) request.getAttribute("course"); %>
+                <input type="hidden" name="courseID" value="<%= warningCourseID  %>" />
                 <button>Proceed</button>
             </form>
-            <button style="color: black;background-color: white;border: 1px solid #003AA6;" commandfor="warning" command="close">Cancel</button>
+            <button style="color: black;background-color: white;border: 1px solid #003AA6;" commandfor="warning" command="close">
+                Cancel
+            </button>
         </div>
     </dialog>
 

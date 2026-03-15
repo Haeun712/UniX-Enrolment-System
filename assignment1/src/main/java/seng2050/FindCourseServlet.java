@@ -32,15 +32,17 @@ public class FindCourseServlet extends HttpServlet {
 
         HttpSession session = request.getSession();
 
-        String courseCode = request.getParameter("coursecode");
+        String searchString = request.getParameter("search");
         CourseService courseService = new CourseService();
 
         //Search courses matching the input coursecode
-        List<Course> results = courseService.searchCourse(courseCode);
+        List<Course> results = courseService.searchCourse(searchString);
 
         //store searchresults in session to maintain search results 
         session.setAttribute("searchresults", results);
-
+        // Set a flag to indicate that search results should be displayed
+        session.setAttribute("showSearchResult", true);
         response.sendRedirect("FindCourseServlet");  // Redirect to FindCourseServlet to display search results
+
     }
 }

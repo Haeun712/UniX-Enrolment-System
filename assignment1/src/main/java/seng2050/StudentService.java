@@ -74,7 +74,7 @@ public class StudentService {
     }
 
 
-    //enrol the student in the course (add record in student_course_registration table)
+    //enrol the student in the course (add record in studentcourseregistration table)
     public Course enrolCourse(String stdNo, String courseID, int semesterID) {
         Course course = new Course();
         String enrolledCourseID = regDAO.enrolCourse(stdNo, courseID, semesterID);
@@ -85,5 +85,14 @@ public class StudentService {
         return course; // returns the enrolled course (if successful), otherwise null (enrollment failed)
     }
 
-    
+    //drop the course for the student (delete record in studentcourseregistration table)
+    public Course dropCourse(String stdNo, String courseID, int semesterID) {
+        Course course = new Course();
+        String droppedCourseID = regDAO.dropCourse(stdNo, courseID, semesterID);
+        if (droppedCourseID != null) {
+            course = crsDAO.getCourseByCourseID(droppedCourseID);
+        }
+
+        return course; // returns the dropped course (if successful), otherwise null (drop failed)
+    }
 }

@@ -131,4 +131,23 @@ public class StudentCourseRegistrationDAOImpl implements StudentCourseRegistrati
 
         return null;
     }
+
+    @Override
+    public String dropCourse(String stdNo, String courseID, int semesterID) {
+        String sql = "DELETE FROM studentcourseregistration WHERE stdNo = ? AND courseID = ? AND semesterID = ?";
+        try (Connection conn = datasource.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, stdNo);
+            stmt.setString(2, courseID);
+            stmt.setInt(3, semesterID);
+            stmt.executeUpdate();
+
+            return courseID;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
 }

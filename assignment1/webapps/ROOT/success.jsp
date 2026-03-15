@@ -35,20 +35,32 @@
     </header>
 
 
+    
     <%
-        Course enroledcourse = (Course) session.getAttribute("course");
-        List<Course> currentEnrolments = (List<Course>) session.getAttribute("currentEnrolments");
+    String action = request.getParameter("action");
+    String courseID = request.getParameter("course");
+    String title = "";
+    String message = "";
+
+    if ("enrol".equals(action)) {
+        title = "Course Enrolment Successful";
+        message = "You have successfully enrolled in " + courseID + ".";
+    } else if ("drop".equals(action)) {
+        title = "Course Drop Successful";
+        message = "You have successfully dropped " + courseID + ".";
+    }
     %>
     <div class="container">
         <div style="width: 80%; max-width: 600px;text-align: left;">
-            <h2>Course Enrolment Successful </h2>
+            <h2><%= title %></h2>
             <hr>
-            <p style="margin-bottom: 10px;">You have successfully enrolled in <span style="font-weight: bold;">
-                    <%=enroledcourse.getCourseID()%> - <%=enroledcourse.getCourseName()%>
-                </span>.</p>
+            <p style="margin-top: 20px;"><%= message %></p>
         </div>
     </div>
 
+    <%
+        List<Course> currentEnrolments = (List<Course>) session.getAttribute("currentEnrolments");
+    %>
     <div class="container">
         <div style="width: 80%; max-width: 600px;text-align: left;">
             

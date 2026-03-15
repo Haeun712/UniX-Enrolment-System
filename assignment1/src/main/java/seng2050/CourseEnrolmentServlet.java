@@ -106,8 +106,7 @@ public class CourseEnrolmentServlet extends HttpServlet {
             currentEnrolments = StudentService.getCurrentEnrolment(student.getStdNo(), semester.getSemesterID());
 
             session.setAttribute("currentEnrolments", currentEnrolments);
-            session.setAttribute("course", enrolledCourse);
-            response.sendRedirect("success.jsp");
+            response.sendRedirect("success.jsp?action=enrol&course=" + enrolledCourse.getCourseID());
         } else if ("confirm".equals(action)) {
             List<String> completedCourseIDs = StudentService.getCompletedCourseIDs(student.getStdNo(), semester.getSemesterID());
 
@@ -119,7 +118,6 @@ public class CourseEnrolmentServlet extends HttpServlet {
                 request.setAttribute("error", true);
                 request.setAttribute("errorTitle", "Prerequisite Not Met");
                 request.setAttribute("errorContent", "You cannot enrol without completing pre-requisite courses");
-
                 request.setAttribute("showSidebar", true);
                 request.getRequestDispatcher("findcourse.jsp").forward(request, response);
                 return;
@@ -132,7 +130,7 @@ public class CourseEnrolmentServlet extends HttpServlet {
                 request.setAttribute("warning", true);
                 request.setAttribute("warningTitle", "Assumed Knowledge Warning");
                 request.setAttribute("warningContent", "You have not completed the assumed knowledge for this course. Do you want to proceed with enrolment?");
-
+                request.setAttribute("course", courseID);
                 request.setAttribute("showSidebar", true);
                 request.getRequestDispatcher("findcourse.jsp").forward(request, response);
                 return;
@@ -143,8 +141,27 @@ public class CourseEnrolmentServlet extends HttpServlet {
             request.setAttribute("confirmTitle", "Confirm Enrolment");
             request.setAttribute("confirmContent", "Are you sure you want to enrol in " + courseID + "?");
             request.setAttribute("course", courseID);
+            request.setAttribute("confirmAction", "enrol");
             request.setAttribute("showSidebar", true);
             request.getRequestDispatcher("findcourse.jsp").forward(request, response);
+        } else if ("confirmDrop".equals(action)) {
+
+            //display confirmation message before dropping the course
+            request.setAttribute("confirm", true);
+            request.setAttribute("confirmTitle", "Confirm Drop Course");
+            request.setAttribute("confirmContent", "Are you sure you want to drop " + courseID + "?");
+            request.setAttribute("course", courseID);
+            request.setAttribute("confirmAction", "drop");
+            request.getRequestDispatcher("findcourse.jsp").forward(request, response);
+        } else if ("drop".equals(action)) {
+
+            //drop the course (remove record in student_course_registration table)
+            Course DroppedCourse = StudentService.dropCourse(student.getStdNo(), courseID, semester.getSemesterID());
+            
+            currentEnrolments = StudentService.getCurrentEnrolment(student.getStdNo(), semester.getSemesterID());
+ 
+            session.setAttribute("currentEnrolments", currentEnrolments);
+            response.sendRedirect("success.jsp?action=drop&course=" + DroppedCourse.getCourseID());
         }
     }
 }
