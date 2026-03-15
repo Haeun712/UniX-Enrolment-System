@@ -12,7 +12,7 @@ public class Student implements  Serializable {
     //Constructors
     public Student () {}
 
-    public Student (String stdNo, String lastname,String givenNames, String passwordHash, Double passwordSalt) {
+    public Student (String stdNo, String givenNames, String lastname, String passwordHash, Double passwordSalt) {
         this.stdNo = stdNo;
         this.givenNames = givenNames;
         this.lastname = lastname;

@@ -135,11 +135,12 @@ public class CourseDAOImpl implements CourseDAO {
     }
 
     @Override
-    public int getMaxCapacityByCourseID(String courseID) {
-        String sql = "SELECT maxCapacity FROM courseofferings WHERE courseID = ?";
+    public int getMaxCapacityByCourseID(String courseID, int semesterID) {
+        String sql = "SELECT maxCapacity FROM courseofferings WHERE courseID = ? AND semesterID = ?";
         try (Connection conn = datasource.getConnection();
             PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, courseID);
+            stmt.setInt(2, semesterID);
             ResultSet rs = stmt.executeQuery(); 
             
             if (rs.next()) {

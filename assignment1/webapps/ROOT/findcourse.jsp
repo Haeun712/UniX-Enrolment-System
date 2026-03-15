@@ -65,7 +65,7 @@
                             <% Semester semester=(Semester) session.getAttribute("semester"); %>
                                 <p style="margin-bottom: 30px;">Search for courses offered in Semester
                                     <%=semester.getSemester() %> - <%=semester.getYear()%> by Course Code</p>
-                                <form action="FindCourseServlet" method="post">
+                                <form action="FindCourseServlet" method="get">
                                     <label for="search">Course Code</label><br>
                                     <% String searchString = (String) request.getAttribute("search") != null ? (String) request.getAttribute("search") : ""; %>
                                         <input type="text" id="search" name="search"

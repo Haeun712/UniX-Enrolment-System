@@ -7,6 +7,6 @@ public interface CourseDAO {
     List<Course> getAllCourses();
     List<String> getAssumedKnowledgeByCourseID(String courseID);
     List<String> getPrerequisiteByCourseID(String courseID);
-    int getMaxCapacityByCourseID(String courseID);
+    int getMaxCapacityByCourseID(String courseID, int semesterID);
     boolean isCourseOpen(String courseID, int semesterID);
 }

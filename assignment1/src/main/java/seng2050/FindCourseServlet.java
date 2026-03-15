@@ -23,27 +23,22 @@ public class FindCourseServlet extends HttpServlet {
         //Store current Enroled courses in session
         session.setAttribute("currentEnrolments", currentEnrolments);
 
-        request.getRequestDispatcher("findcourse.jsp").forward(request, response);
-
-    }
-
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-
-        HttpSession session = request.getSession();
-
         String searchString = request.getParameter("search");
         CourseService courseService = new CourseService();
 
-        //Search courses matching the input coursecode
-        List<Course> results = courseService.searchCourse(searchString);
+        // Check if user searches 
+        if (searchString != null) {
+            //Search courses matching the input coursecode
+            List<Course> results = courseService.searchCourse(searchString);
 
-        //store searchresults in session to maintain search results 
-        session.setAttribute("searchresults", results);
-        // Set a flag to indicate that search results should be displayed
-        session.setAttribute("showSearchResult", true);
-        request.setAttribute("search", searchString);
-        request.getRequestDispatcher("findcourse.jsp").forward(request, response); 
+            //store searchresults in session to maintain search results 
+            session.setAttribute("searchresults", results);
+            // Set a flag to indicate that search results should be displayed
+            session.setAttribute("showSearchResult", true);
+            request.setAttribute("search", searchString);
+        }
+
+        request.getRequestDispatcher("findcourse.jsp").forward(request, response);
 
     }
 }

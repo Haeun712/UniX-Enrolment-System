@@ -60,7 +60,7 @@ public class CourseService {
 
     // if the course reach the maximum capacity for this semester, return true. Otherwise, false
      public boolean reachMaxCapacity(String courseID, int semesterID) {
-        int max = crsDAO.getMaxCapacityByCourseID(courseID);
+        int max = crsDAO.getMaxCapacityByCourseID(courseID, semesterID);
         int studentCount = regDAO.getEnroledStudentCount(courseID, semesterID);
         return studentCount >= max;
     }

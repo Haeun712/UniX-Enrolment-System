@@ -1,103 +1,108 @@
 <%@ page import="seng2050.Course" %>
-<%@ page import="java.util.List" %>
-<!DOCTYPE html>
-<html lang="en">
+<%@ page import="seng2050.Student" %>
+    <%@ page import="java.util.List" %>
+        <!DOCTYPE html>
+        <html lang="en">
 
-<head>
-    <title>UniX - Enrolment</title>
-    <link rel="stylesheet" href="/css/style.css">
-    <style>
-        th,
-        td {
-            border: 1px solid #ccc;
-            padding: 5px 8px;
-            text-align: left;
-        }
-    </style>
-</head>
+        <head>
+            <title>UniX - Enrolment</title>
+            <link rel="stylesheet" href="/css/style.css">
+            <style>
+                th,
+                td {
+                    border: 1px solid #ccc;
+                    padding: 5px 8px;
+                    text-align: left;
+                }
+            </style>
+        </head>
 
-<body>
-    <header>
-        <img src="/images/UniXLogo.jpg" height="32px" />
-        <h1>Course Enrolment</h1>
-        <div class="icon-container" style="gap:20px">
-            <div class="icon-container">
-                <img src="/images/User.png" height="24px" />
-                <p>
-                    <%=session.getAttribute("username") %>
-                </p>
-            </div>
-            <button class="icon-container" onclick="location.href='LogoutServlet'">
-                <img src="/images/LogOut.png" height="24px" />
-                Log Out</button>
-        </div>
-        </div>
-    </header>
+        <body>
+            <header>
+                <img src="/images/UniXLogo.jpg" height="32px" />
+                <h1>Course Enrolment</h1>
+                <div class="icon-container" style="gap:20px">
+                        <div class="icon-container">
+                            <img src="/images/User.png" height="24px" />
+                            <% Student student=(Student) session.getAttribute("student"); %>
+                                <p>
+                                    <%=student.getGivenNames() %> <%=student.getLastName() %>
+                                </p>
+                        </div>
+                        <button class="icon-container" onclick="location.href='LogoutServlet'">
+                            <img src="/images/LogOut.png" height="24px" />
+                            Log Out</button>
+                    </div>
+                    </div>
+            </header>
 
 
-    
-    <%
-    String action = request.getParameter("action");
-    String courseID = request.getParameter("course");
-    String title = "";
-    String message = "";
 
-    if ("enrol".equals(action)) {
-        title = "Course Enrolment Successful";
-        message = "You have successfully enrolled in " + courseID + ".";
-    } else if ("drop".equals(action)) {
-        title = "Course Drop Successful";
-        message = "You have successfully dropped " + courseID + ".";
-    }
-    %>
-    <div class="container">
-        <div style="width: 80%; max-width: 600px;text-align: left;">
-            <h2><%= title %></h2>
-            <hr>
-            <p style="margin-top: 20px;"><%= message %></p>
-        </div>
-    </div>
+            <% String action=request.getParameter("action"); String courseID=request.getParameter("course"); String
+                title="" ; String message="" ; if ("enrol".equals(action)) { title="Course Enrolment Successful" ;
+                message="You have successfully enrolled in " + courseID + "." ; } else if ("drop".equals(action)) {
+                title="Course Drop Successful" ; message="You have successfully dropped " + courseID + "." ; } %>
+                <div class="container">
+                    <div style="width: 80%; max-width: 600px;text-align: left;">
+                        <h2>
+                            <%= title %>
+                        </h2>
+                        <hr>
+                        <p style="margin-top: 20px;">
+                            <%= message %>
+                        </p>
+                    </div>
+                </div>
 
-    <%
-        List<Course> currentEnrolments = (List<Course>) session.getAttribute("currentEnrolments");
-    %>
-    <div class="container">
-        <div style="width: 80%; max-width: 600px;text-align: left;">
-            
-            <h2>Current Enrolments</h2>
+                <% List<Course> currentEnrolments = (List<Course>) session.getAttribute("currentEnrolments");
+                        %>
+                        <div class="container">
+                            <div style="width: 80%; max-width: 600px;text-align: left;">
 
-            <%  if(currentEnrolments!=null && !currentEnrolments.isEmpty()) { %>
-            <table style="width: 100%; border: 1px solid #c5c5c5;border-collapse: collapse; margin-top: 20px;">
-                <thead style="background-color: #c5c5c5;">
-                    <tr>
-                        <th>CourseID</th>
-                        <th>Course Name</th>
-                        <th>Credits</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <% for (Course course : currentEnrolments) { %>
-                    <tr>
-                        <td><%=course.getCourseID() %></td>
-                        <td><%=course.getCourseName() %></td>
-                        <td><%=course.getCredits() %></td>
-                    </tr>
-                    <% } %>
-                </tbody>
-            </table>
-             <%} else {%>
-                <p style="margin-top: 40px; font-weight: bold;">You are not enrolled in any courses this semester.</p>
-             <% } %>
-            
-            <div class="button-container" style="margin-top: 60px;">
-                <form action="FindCourseServlet" method="GET">
-                    <button type="submit" style="padding: 5px 15px;font-size: 16px;">Enrol Another Course</button>
-                </form>
-            </div>
-        </div>
+                                <h2>Current Enrolments</h2>
 
-    </div>
+                                <% if(currentEnrolments!=null && !currentEnrolments.isEmpty()) { %>
+                                    <table
+                                        style="width: 100%; border: 1px solid #c5c5c5;border-collapse: collapse; margin-top: 20px;">
+                                        <thead style="background-color: #c5c5c5;">
+                                            <tr>
+                                                <th>CourseID</th>
+                                                <th>Course Name</th>
+                                                <th>Credits</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <% for (Course course : currentEnrolments) { %>
+                                                <tr>
+                                                    <td>
+                                                        <%=course.getCourseID() %>
+                                                    </td>
+                                                    <td>
+                                                        <%=course.getCourseName() %>
+                                                    </td>
+                                                    <td>
+                                                        <%=course.getCredits() %>
+                                                    </td>
+                                                </tr>
+                                                <% } %>
+                                        </tbody>
+                                    </table>
+                                    <%} else {%>
+                                        <p style="margin-top: 40px; font-weight: bold;">You are not enrolled in any
+                                            courses this semester.</p>
+                                        <% } %>
 
-</body>
+                                            <div class="button-container" style="margin-top: 60px;">
+                                                <form action="FindCourseServlet" method="GET">
+                                                    <button type="submit"
+                                                        style="padding: 5px 15px;font-size: 16px;">Enrol Another
+                                                        Course</button>
+                                                </form>
+                                            </div>
+                            </div>
 
-</html>
+                        </div>
+
+        </body>
+
+        </html>
